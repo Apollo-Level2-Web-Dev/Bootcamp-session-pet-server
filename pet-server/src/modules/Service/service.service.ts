@@ -16,21 +16,8 @@ const createServiceIntoDB = async (payload: any, userId: string) => {
   return result;
 };
 
-const getAllServiceIntoDB = async (userId: string) => {
-  const sitterProfile = await prisma.sitterProfiles.findUnique({
-    where: {
-      sitterId: userId,
-    },
-  });
-
-  if (!sitterProfile) {
-    throw new Error("Sitter Profile not found");
-  }
-
+const getAllServiceIntoDB = async () => {
   const result = await prisma.service.findMany({
-    where: {
-      sitterId: sitterProfile.id,
-    },
     include: {
       sitter: true,
     },
